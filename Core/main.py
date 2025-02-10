@@ -11,12 +11,13 @@ import torch
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
 from db_main import DbMain
+from dotenv import load_dotenv, dotenv_values
 
 
-key = "/home/tammy/Documents/myself/keys/test_dummy_key.txt"
-from_email = "tdummy027@gmail.com"  # must match the email used to generate the password
-to_email = "superinfinity5@gmail.com"  # receiver email
-
+load_dotenv()
+key = os.getenv("MAIL_TOKEN") # should be your token/password, generated for your application.
+from_email = "tdummy027@gmail.com"  # must match the email used to generate the password.
+to_email = "superinfinity5@gmail.com"  # receiver email.
 
 with open(key) as f:
     password = f.read()
@@ -39,10 +40,6 @@ def get_location():
     except geocoder.GeocoderNotFound as e:
         print("Geocoder not found:", e)
     return None
-
-
-
-
 
 def send_email(db_main, to_email, from_email, object_detected=1, image_path=None):
     """Sends an email notification with the number of detected objects and attaches the image of violence detected."""
