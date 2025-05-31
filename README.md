@@ -21,4 +21,4 @@ Hence, any civilian/people that are registered on the app, can rush to the scene
 ## Model - Yolov8 that was custom trained onto dataset of violence. [Yolov8 Docs.](https://docs.ultralytics.com/models/yolov8/)
 ## Dataset - [Roboflow Violence-dataset.](https://universe.roboflow.com/neuron-x1sgr/fight-detection-7xdy7/dataset/2#)
 
-### Demo Video available at (Youtube)[https://youtu.be/nhnEgaxg0g8]
+### Demo Video available at [Youtube](https://youtu.be/nhnEgaxg0g8)
