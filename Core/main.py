@@ -10,9 +10,7 @@ import cv2
 import torch
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
-from db_main import DbMain
-from dotenv import load_dotenv, dotenv_values
-
+from dotenv import load_dotenv
 
 load_dotenv()
 key = os.getenv("MAIL_TOKEN") # should be your token/password, generated for your application.
@@ -41,7 +39,7 @@ def get_location():
         print("Geocoder not found:", e)
     return None
 
-def send_email(db_main, to_email, from_email, object_detected=1, image_path=None):
+def send_email(to_email, from_email, object_detected=1, image_path=None):
     """Sends an email notification with the number of detected objects and attaches the image of violence detected."""
     message = MIMEMultipart()
     message["From"] = from_email
@@ -53,8 +51,6 @@ def send_email(db_main, to_email, from_email, object_detected=1, image_path=None
     location = get_location()
     if location:
         message_body = f"ALERT - {object_detected} objects have been detected!!\n\nLocation: {location[0]}, {location[1]}"
-
-        db_main.send_lat_and_long(location[0], location[1])
     else:
         message_body = f"ALERT - {object_detected} objects have been detected!!\n\nLocation: Not available"
 
@@ -93,7 +89,7 @@ class ObjectDetection:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
         # Firebase init
-        self.db_main = DbMain()
+        # self.db_main = DbMain()
 
     def predict(self, im0):
         """Run prediction using a YOLO model for the input image `im0`."""
@@ -154,7 +150,7 @@ class ObjectDetection:
                     cv2.imwrite(image_path, im0)
 
                     # Send email with the image attached
-                    send_email(self.db_main, to_email, from_email, len(class_ids), image_path=image_path)
+                    send_email(to_email, from_email, len(class_ids), image_path=image_path)
                     self.email_sent = True
 
             else:

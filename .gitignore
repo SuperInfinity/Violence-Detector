@@ -1,0 +1,6 @@
+.env
+.venv/
+.venv/*
+Core/Proof/
+Core/Proof/*
+!Core/
